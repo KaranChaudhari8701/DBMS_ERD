@@ -1,0 +1,27 @@
+CREATE TABLE Car
+(
+  Colour INT NOT NULL,
+  Type INT NOT NULL
+);
+
+CREATE TABLE Model
+(
+  Name CHAR NOT NULL,
+  Type CHAR NOT NULL,
+  Price INT NOT NULL,
+  Engine  NOT NULL,
+  Features NODATATYPE NOT NULL,
+  Fuel CHAR NOT NULL
+);
+
+CREATE TABLE Dealer
+(
+  Name CHAR NOT NULL,
+  Address CHAR NOT NULL,
+  Documnets NODATATYPE NOT NULL
+);
+
+CREATE TABLE Motor_Maker
+(
+  Name INT NOT NULL
+);
