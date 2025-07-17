@@ -1,0 +1,119 @@
+Microsoft Windows [Version 10.0.19045.6093]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Program Files\MySQL\MySQL Server 9.3\bin>mysql -h localhost -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 9.3.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database bank;
+Query OK, 1 row affected (0.119 sec)
+
+mysql> show database;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'database' at line 1
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| abc                |
+| bank               |
+| information_schema |
+| mysql              |
+| new                |
+| performance_schema |
+| sys                |
++--------------------+
+7 rows in set (0.011 sec)
+
+mysql> use bank;
+Database changed
+mysql> create table customer(customer_id int , name varchar(30) , address varchar(50) , contact_numner int);
+Query OK, 0 rows affected (0.209 sec)
+
+mysql> alter table customer add primary key(customer_id);
+Query OK, 0 rows affected (0.334 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> CREATE TABLE account (
+    ->   account_number INT PRIMARY KEY,
+    ->   customer_id INT,
+    ->   type VARCHAR(10),
+    ->   FOREIGN KEY (customer_id) REFERENCES customer(customer_id)
+    -> );
+Query OK, 0 rows affected (0.396 sec)
+
+mysql> CREATE USER 'Karan'@'localhost' IDENTIFIED BY 'Karan123';
+Query OK, 0 rows affected (0.168 sec)
+
+mysql> GRANT ALL PRIVILEGES ON bank.customer TO 'Karan'@'localhost';
+Query OK, 0 rows affected (0.085 sec)
+
+mysql> GRANT ALL PRIVILEGES ON bank.account TO 'Karan'@'localhost';
+Query OK, 0 rows affected (0.021 sec)
+
+mysql>
+mysql> revoke all privileges on bank.customer from 'Karan'@localhost;
+Query OK, 0 rows affected (0.098 sec)
+
+mysql> revoke all privileges om bank.account from 'Karan'@localhost;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'om bank.account from 'Karan'@localhost' at line 1
+mysql> revoke all privileges on bank.account from 'Karan'@localhost;
+Query OK, 0 rows affected (0.088 sec)
+
+mysql> grant select on bank.customer to 'Karan'@localhost;
+Query OK, 0 rows affected (0.089 sec)
+
+mysql> grant select on bank.account to 'Karan'@localhost;
+Query OK, 0 rows affected (0.089 sec)
+
+mysql> desc customer
+    -> ^C
+mysql> desc customer;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| customer_id    | int         | NO   | PRI | NULL    |       |
+| name           | varchar(30) | YES  |     | NULL    |       |
+| address        | varchar(50) | YES  |     | NULL    |       |
+| contact_numner | int         | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+4 rows in set (0.069 sec)
+
+mysql> desc account;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| account_number | int         | NO   | PRI | NULL    |       |
+| customer_id    | int         | YES  | MUL | NULL    |       |
+| type           | varchar(10) | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+3 rows in set (0.065 sec)
+
+mysql> alter tabl customer add constraint checkval check(customer_id > 1000);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'tabl customer add constraint checkval check(customer_id > 1000)' at line 1
+mysql> alter table customer add constraint checkval check(customer_id > 1000);
+Query OK, 0 rows affected (0.575 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc customer
+    -> ;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| customer_id    | int         | NO   | PRI | NULL    |       |
+| name           | varchar(30) | YES  |     | NULL    |       |
+| address        | varchar(50) | YES  |     | NULL    |       |
+| contact_numner | int         | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+4 rows in set (0.013 sec)
+
+mysql>
