@@ -1,0 +1,130 @@
+Microsoft Windows [Version 10.0.19045.6093]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Program Files\MySQL\MySQL Server 9.3\bin>mysql -h localhost -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 9.3.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create table CarCompany();
+
+mysql> show databases
+    -> show databases;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'show databases' at line 2
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| demo               |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.222 sec)
+
+mysql> create database new;
+Query OK, 1 row affected (0.129 sec)
+
+mysql> use new;
+Database changed
+mysql> use demo
+Database changed
+mysql> create table carcompany(name varchar(40) , price int);
+Query OK, 0 rows affected (0.329 sec)
+
+mysql> describe carcompany
+    -> describe
+    -> describe carcomapny;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'describe
+describe carcomapny' at line 2
+mysql> describe carcompany;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| name  | varchar(40) | YES  |     | NULL    |       |
+| price | int         | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.112 sec)
+
+mysql> create user 'karan'@localhost identified by 'karan123';
+Query OK, 0 rows affected (0.236 sec)
+
+mysql> create user 'karan'@localhost identified by 'root';
+ERROR 1396 (HY000): Operation CREATE USER failed for 'karan'@'localhost'
+mysql> SELECT user, Host FROM mysql.user WHERE user = 'karan' AND HOST = 'localhost';
++-------+-----------+
+| user  | Host      |
++-------+-----------+
+| karan | localhost |
++-------+-----------+
+1 row in set (0.005 sec)
+
+mysql> grant all privileges on demo.* to karan@localhost;
+Query OK, 0 rows affected (0.104 sec)
+
+mysql> alter table carcompany add carmodel varchar(20);
+Query OK, 0 rows affected (0.592 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc carcompany
+    -> j;
+Empty set (0.012 sec)
+
+mysql> desc carcompany;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| name     | varchar(40) | YES  |     | NULL    |       |
+| price    | int         | YES  |     | NULL    |       |
+| carmodel | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.011 sec)
+
+mysql> Alter table carcompany MODIFY price INT NOT NULL;
+Query OK, 0 rows affected (0.405 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO carcompany (name,price,carmodel)
+    -> values ('pratik', 450000, 'innova');
+Query OK, 1 row affected (0.117 sec)
+
+mysql> desc carcompany;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| name     | varchar(40) | YES  |     | NULL    |       |
+| price    | int         | NO   |     | NULL    |       |
+| carmodel | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.014 sec)
+
+mysql> set primary key
+    -> alter;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key
+alter' at line 1
+mysql> alter table carcompany
+    -> add primary key(name);
+Query OK, 0 rows affected (0.787 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from carcompany;
++--------+--------+----------+
+| name   | price  | carmodel |
++--------+--------+----------+
+| pratik | 450000 | innova   |
++--------+--------+----------+
+1 row in set (0.004 sec)
+
+mysql>
