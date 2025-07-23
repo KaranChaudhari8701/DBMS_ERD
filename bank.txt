@@ -1,0 +1,229 @@
+Microsoft Windows [Version 10.0.19045.6093]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Program Files\MySQL\MySQL Server 9.3\bin>mysql -h localhost -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 9.3.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databses
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'databses' at line 1
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| demo               |
+| information_schema |
+| mysql              |
+| new                |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.240 sec)
+
+mysql> create database bank;
+Query OK, 1 row affected (0.077 sec)
+
+mysql> use bank;
+Database changed
+mysql> create table bank(empid int,name varchar(40), salary int);
+Query OK, 0 rows affected (0.265 sec)
+
+mysql> desc bank;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| empid  | int         | YES  |     | NULL    |       |
+| name   | varchar(40) | YES  |     | NULL    |       |
+| salary | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.146 sec)
+
+mysql> ALTER TABLE bank
+    -> ADD CONSTRAINT pk_emp PRIMARY KEY (empid);
+Query OK, 0 rows affected (0.553 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE bank
+    -> MODIFY COLUMN name VARCHAR(40) NOT NULL;
+Query OK, 0 rows affected (1.319 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE bank
+    -> MODIFY COLUMN salary INT NOT NULL;
+Query OK, 0 rows affected (0.524 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE bank
+    -> ADD CONSTRAINT uq_name UNIQUE (name);
+Query OK, 0 rows affected (0.165 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE bank
+    -> ADD CONSTRAINT chk_salary CHECK (salary >= 1000);
+Query OK, 0 rows affected (0.934 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE employee_bank
+    -> ADD COLUMN department VARCHAR(30);
+ERROR 1146 (42S02): Table 'bank.employee_bank' doesn't exist
+mysql> alter table bank add column department varchar(40);
+Query OK, 0 rows affected (1.701 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE employee_bank
+    -> MODIFY COLUMN salary DECIMAL(10,2);
+ERROR 1146 (42S02): Table 'bank.employee_bank' doesn't exist
+mysql> alter table bank modify column salary decimal(10,2);
+Query OK, 0 rows affected (0.631 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc bank;
++------------+---------------+------+-----+---------+-------+
+| Field      | Type          | Null | Key | Default | Extra |
++------------+---------------+------+-----+---------+-------+
+| empid      | int           | NO   | PRI | NULL    |       |
+| name       | varchar(40)   | NO   | UNI | NULL    |       |
+| salary     | decimal(10,2) | YES  |     | NULL    |       |
+| department | varchar(40)   | YES  |     | NULL    |       |
++------------+---------------+------+-----+---------+-------+
+4 rows in set (0.013 sec)
+
+mysql> alter table bank dropcolumn department;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'dropcolumn department' at line 1
+mysql> alter table bank drop column department;
+Query OK, 0 rows affected (0.506 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table bank drop index name;
+ERROR 1091 (42000): Can't DROP 'name'; check that column/key exists
+mysql> desc bank;
++--------+---------------+------+-----+---------+-------+
+| Field  | Type          | Null | Key | Default | Extra |
++--------+---------------+------+-----+---------+-------+
+| empid  | int           | NO   | PRI | NULL    |       |
+| name   | varchar(40)   | NO   | UNI | NULL    |       |
+| salary | decimal(10,2) | YES  |     | NULL    |       |
++--------+---------------+------+-----+---------+-------+
+3 rows in set (0.014 sec)
+
+mysql> insert into bank values(01,'Mahesh',12000,'Accounts');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into bank values(01,'Mahesh',12000);
+Query OK, 1 row affected (0.684 sec)
+
+mysql> desc bank
+    -> ;
++--------+---------------+------+-----+---------+-------+
+| Field  | Type          | Null | Key | Default | Extra |
++--------+---------------+------+-----+---------+-------+
+| empid  | int           | NO   | PRI | NULL    |       |
+| name   | varchar(40)   | NO   | UNI | NULL    |       |
+| salary | decimal(10,2) | YES  |     | NULL    |       |
++--------+---------------+------+-----+---------+-------+
+3 rows in set (0.012 sec)
+
+mysql> desc bank;
++--------+---------------+------+-----+---------+-------+
+| Field  | Type          | Null | Key | Default | Extra |
++--------+---------------+------+-----+---------+-------+
+| empid  | int           | NO   | PRI | NULL    |       |
+| name   | varchar(40)   | NO   | UNI | NULL    |       |
+| salary | decimal(10,2) | YES  |     | NULL    |       |
++--------+---------------+------+-----+---------+-------+
+3 rows in set (0.012 sec)
+
+mysql> create user 'Karan'@localhost identified by 'Karan123';
+Query OK, 0 rows affected (0.224 sec)
+
+mysql> grant all privilegees on bank.bank to 'Karan'@'localhost';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'privilegees on bank.bank to 'Karan'@'localhost'' at line 1
+mysql> grant all privileges on bank.* to 'Karan'@'localhost'identified by 'Karan123';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'identified by 'Karan123'' at line 1
+mysql> GRANT ALL PRIVILEGES ON bank.* TO 'Karan'@'host' IDENTIFIED BY 'Karan123';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'IDENTIFIED BY 'Karan123'' at line 1
+mysql> insert query to insert data in table in mysql
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'to insert data in table in mysql' at line 1
+mysql> GRANT ALL PRIVILEGES ON bank.* TO 'Karan'@'localhost' IDENTIFIED BY 'Karan123';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'IDENTIFIED BY 'Karan123'' at line 1
+mysql> select * from bank;
++-------+--------+----------+
+| empid | name   | salary   |
++-------+--------+----------+
+|     1 | Mahesh | 12000.00 |
++-------+--------+----------+
+1 row in set (0.005 sec)
+
+mysql> insert into bank values(02,'Om',20000),(03,'Ajay',45000),(04,'Satish',85000);
+Query OK, 3 rows affected (0.151 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from bank;
++-------+--------+----------+
+| empid | name   | salary   |
++-------+--------+----------+
+|     1 | Mahesh | 12000.00 |
+|     2 | Om     | 20000.00 |
+|     3 | Ajay   | 45000.00 |
+|     4 | Satish | 85000.00 |
++-------+--------+----------+
+4 rows in set (0.004 sec)
+
+mysql> GRANT ALL PRIVILEGES ON bank.bank TO 'Karan'@'localhost';
+Query OK, 0 rows affected (0.100 sec)
+
+mysql> grant select on bank.bank to 'Karan'@localhost;
+Query OK, 0 rows affected (0.089 sec)
+
+mysql> desc bank;
++--------+---------------+------+-----+---------+-------+
+| Field  | Type          | Null | Key | Default | Extra |
++--------+---------------+------+-----+---------+-------+
+| empid  | int           | NO   | PRI | NULL    |       |
+| name   | varchar(40)   | NO   | UNI | NULL    |       |
+| salary | decimal(10,2) | YES  |     | NULL    |       |
++--------+---------------+------+-----+---------+-------+
+3 rows in set (0.014 sec)
+
+mysql> insert into bank values(05,'Manoj',500);
+ERROR 3819 (HY000): Check constraint 'chk_salary' is violated.
+mysql> select * from bank;
++-------+--------+----------+
+| empid | name   | salary   |
++-------+--------+----------+
+|     1 | Mahesh | 12000.00 |
+|     2 | Om     | 20000.00 |
+|     3 | Ajay   | 45000.00 |
+|     4 | Satish | 85000.00 |
++-------+--------+----------+
+4 rows in set (0.004 sec)
+
+mysql> insert into bank values(05,'Manoj',1000);
+Query OK, 1 row affected (0.094 sec)
+
+mysql> select * from bank;
++-------+--------+----------+
+| empid | name   | salary   |
++-------+--------+----------+
+|     1 | Mahesh | 12000.00 |
+|     2 | Om     | 20000.00 |
+|     3 | Ajay   | 45000.00 |
+|     4 | Satish | 85000.00 |
+|     5 | Manoj  |  1000.00 |
++-------+--------+----------+
+5 rows in set (0.004 sec)
+
+mysql>  
