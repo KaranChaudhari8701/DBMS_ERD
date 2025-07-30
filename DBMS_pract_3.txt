@@ -1,0 +1,357 @@
+Microsoft Windows [Version 10.0.19045.6093]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Program Files\MySQL>mysql -h localhost -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.34 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| a                  |
+| bank               |
+| customer           |
+| demo               |
+| demo12             |
+| demob2             |
+| demodb             |
+| depositer          |
+| depositor          |
+| emp                |
+| employee           |
+| employee1          |
+| mysql              |
+| mysqlconnect       |
+| student            |
+| student1           |
+| sys                |
+| user               |
+| vehicle            |
++--------------------+
+37 rows in set (0.08 sec)
+
+mysql> use bank
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_bank |
++----------------+
+| account        |
+| branch         |
++----------------+
+2 rows in set (0.03 sec)
+
+mysql> desc account;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| accno | int         | NO   | PRI | NULL    |       |
+| bname | varchar(20) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.02 sec)
+
+mysql> desc branch
+    -> \c
+mysql> desc brach;
+ERROR 1146 (42S02): Table 'bank.brach' doesn't exist
+mysql> desc branch;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| branchname | varchar(20) | NO   | PRI | NULL    |       |
+| cityname   | varchar(10) | YES  |     | NULL    |       |
+| asset      | varchar(20) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> drop database bank;
+Query OK, 2 rows affected (0.06 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| a                  |
+| bank               |
+| customer           |
+| demo               |
+| demo12             |
+| demob2             |
+| demodb             |
+| depositer          |
+| depositor          |
+| emp                |
+| employee           |
+| employee1          |
+| mysql              |
+| mysqlconnect       |
+| student            |
+| student1           |
+| sys                |
+| user               |
+| vehicle            |
++--------------------+
+36 rows in set (0.00 sec)
+
+mysql> create database bank;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use bank;
+Database changed
+mysql> create table customer(customerID int, name varchara(10),address varchar(20) default 'Talegaon',conatactNO);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'varchara(10),address varchar(20) default 'Talegaon',conatactNO)' at line 1
+mysql> CREATE TABLE customer (
+    ->     customerID INT,
+    ->     name VARCHAR(10),
+    ->     address VARCHAR(20) DEFAULT 'Talegaon',
+    ->     contactNO INT
+    -> );
+Query OK, 0 rows affected (0.16 sec)
+
+mysql> create table account(accountNumber int,AccNo int references customer(customerID),accountType varchar(10));
+Query OK, 0 rows affected (0.14 sec)
+
+mysql> create table transaction(transactionID int references account(AccNo),date int,amount int NOT NULL);
+Query OK, 0 rows affected (0.15 sec)
+
+mysql> create table employee(employeeID int Primary key, name varchar(10),salary int,role varchar(10));
+Query OK, 0 rows affected (0.15 sec)
+
+mysql> alter table customer add column emailID;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> alter table customer add emailID int;
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc customer;
++------------+-------------+------+-----+----------+-------+
+| Field      | Type        | Null | Key | Default  | Extra |
++------------+-------------+------+-----+----------+-------+
+| customerID | int         | YES  |     | NULL     |       |
+| name       | varchar(10) | YES  |     | NULL     |       |
+| address    | varchar(20) | YES  |     | Talegaon |       |
+| contactNO  | int         | YES  |     | NULL     |       |
+| emailID    | int         | YES  |     | NULL     |       |
++------------+-------------+------+-----+----------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table customer add primary key(customerID);
+Query OK, 0 rows affected (0.18 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc customer;
++------------+-------------+------+-----+----------+-------+
+| Field      | Type        | Null | Key | Default  | Extra |
++------------+-------------+------+-----+----------+-------+
+| customerID | int         | NO   | PRI | NULL     |       |
+| name       | varchar(10) | YES  |     | NULL     |       |
+| address    | varchar(20) | YES  |     | Talegaon |       |
+| contactNO  | int         | YES  |     | NULL     |       |
+| emailID    | int         | YES  |     | NULL     |       |
++------------+-------------+------+-----+----------+-------+
+5 rows in set (0.00 sec)
+
+mysql> desc account;
++---------------+-------------+------+-----+---------+-------+
+| Field         | Type        | Null | Key | Default | Extra |
++---------------+-------------+------+-----+---------+-------+
+| accountNumber | int         | YES  |     | NULL    |       |
+| AccNo         | int         | YES  |     | NULL    |       |
+| accountType   | varchar(10) | YES  |     | NULL    |       |
++---------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc transaction;
++---------------+------+------+-----+---------+-------+
+| Field         | Type | Null | Key | Default | Extra |
++---------------+------+------+-----+---------+-------+
+| transactionID | int  | YES  |     | NULL    |       |
+| date          | int  | YES  |     | NULL    |       |
+| amount        | int  | NO   |     | NULL    |       |
++---------------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc employee;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| employeeID | int         | NO   | PRI | NULL    |       |
+| name       | varchar(10) | YES  |     | NULL    |       |
+| salary     | int         | YES  |     | NULL    |       |
+| role       | varchar(10) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table employee modify name into NOT NULL;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'into NOT NULL' at line 1
+mysql> alter table employee modify name varchar(10) NOT NULL;
+Query OK, 0 rows affected (0.15 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc employee;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| employeeID | int         | NO   | PRI | NULL    |       |
+| name       | varchar(10) | NO   |     | NULL    |       |
+| salary     | int         | YES  |     | NULL    |       |
+| role       | varchar(10) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table customer drop contactNO;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc customer;
++------------+-------------+------+-----+----------+-------+
+| Field      | Type        | Null | Key | Default  | Extra |
++------------+-------------+------+-----+----------+-------+
+| customerID | int         | NO   | PRI | NULL     |       |
+| name       | varchar(10) | YES  |     | NULL     |       |
+| address    | varchar(20) | YES  |     | Talegaon |       |
+| emailID    | int         | YES  |     | NULL     |       |
++------------+-------------+------+-----+----------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table employee rename to worker;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc worker;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| employeeID | int         | NO   | PRI | NULL    |       |
+| name       | varchar(10) | NO   |     | NULL    |       |
+| salary     | int         | YES  |     | NULL    |       |
+| role       | varchar(10) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table worker change column employeeID workerID int;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc worker;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| workerID | int         | NO   | PRI | NULL    |       |
+| name     | varchar(10) | NO   |     | NULL    |       |
+| salary   | int         | YES  |     | NULL    |       |
+| role     | varchar(10) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table customer ADD CONSTRAINT chk_customerID CHECK(customerID > 1000);
+Query OK, 0 rows affected (0.16 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc customer;
++------------+-------------+------+-----+----------+-------+
+| Field      | Type        | Null | Key | Default  | Extra |
++------------+-------------+------+-----+----------+-------+
+| customerID | int         | NO   | PRI | NULL     |       |
+| name       | varchar(10) | YES  |     | NULL     |       |
+| address    | varchar(20) | YES  |     | Talegaon |       |
+| emailID    | int         | YES  |     | NULL     |       |
++------------+-------------+------+-----+----------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table customer drop constraint primary key;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key' at line 1
+mysql> alter table customer drop primary key;
+Query OK, 0 rows affected (0.16 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE customer MODIFY COLUMN emailID VARCHAR(20);
+Query OK, 0 rows affected (0.16 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into customer values(1234,'SARTH','XYZ','abc@gmail.com');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into worker(123,'Joe',10000,'Manager');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '123,'Joe',10000,'Manager')' at line 1
+mysql> insert into worker values(123,'Joe',10000,'Manager');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> desc worker;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| workerID | int         | NO   | PRI | NULL    |       |
+| name     | varchar(10) | NO   |     | NULL    |       |
+| salary   | int         | YES  |     | NULL    |       |
+| role     | varchar(10) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select * from worker;
++----------+------+--------+---------+
+| workerID | name | salary | role    |
++----------+------+--------+---------+
+|      123 | Joe  |  10000 | Manager |
++----------+------+--------+---------+
+1 row in set (0.00 sec)
+
+mysql> select * from customer;
++------------+-------+---------+---------------+
+| customerID | name  | address | emailID       |
++------------+-------+---------+---------------+
+|       1234 | SARTH | XYZ     | abc@gmail.com |
++------------+-------+---------+---------------+
+1 row in set (0.00 sec)
+
+mysql> insert into account values(454,645,'abc');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into transaction values(9384,11-02-25,8353);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from account;
++---------------+-------+-------------+
+| accountNumber | AccNo | accountType |
++---------------+-------+-------------+
+|           454 |   645 | abc         |
++---------------+-------+-------------+
+1 row in set (0.00 sec)
+
+
+mysql> DELETE FROM transaction WHERE date = -16;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> ALTER TABLE transaction MODIFY COLUMN date DATE;
+Query OK, 0 rows affected (0.16 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into transaction values(9384, '2011-02-25', 8353);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from transaction;
++---------------+------------+--------+
+| transactionID | date       | amount |
++---------------+------------+--------+
+|          9384 | 2011-02-25 |   8353 |
++---------------+------------+--------+
+1 row in set (0.00 sec)
+
+mysql> CREATE USER Karan IDENTIFIED BY 'root';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> GRANT SELECT ON customer TO Karan;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> GRANT SELECT ON account TO Karan;
+Query OK, 0 rows affected (0.00 sec)
