@@ -1,0 +1,491 @@
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 9.2.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| bank               |
+| information_schema |
+| mysql              |
+| new                |
+| now                |
+| performance_schema |
+| sys                |
++--------------------+
+7 rows in set (0.06 sec)
+
+mysql> use bank;
+Database changed
+mysql> select abs(-6);
++---------+
+| abs(-6) |
++---------+
+|       6 |
++---------+
+1 row in set (0.00 sec)
+
+mysql> select CEIL(4.2);
++-----------+
+| CEIL(4.2) |
++-----------+
+|         5 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select FLOOR(2.6);
++------------+
+| FLOOR(2.6) |
++------------+
+|          2 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select ROUND(3.446,2);
++----------------+
+| ROUND(3.446,2) |
++----------------+
+|           3.45 |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select POWER(5,3);
++------------+
+| POWER(5,3) |
++------------+
+|        125 |
++------------+
+1 row in set (0.01 sec)
+
+mysql> select SQRT(7);
++--------------------+
+| SQRT(7)            |
++--------------------+
+| 2.6457513110645907 |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> select SIN(0);
++--------+
+| SIN(0) |
++--------+
+|      0 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select COS(0);
++--------+
+| COS(0) |
++--------+
+|      1 |
++--------+
+1 row in set (0.00 sec)
+
+mysql>  select LOG(9);
++--------------------+
+| LOG(9)             |
++--------------------+
+| 2.1972245773362196 |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql>  select TAN(30);
++--------------------+
+| TAN(30)            |
++--------------------+
+| -6.405331196646276 |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> desc employee;
++----------------+-------------+------+-----+----------+-------+
+| Field          | Type        | Null | Key | Default  | Extra |
++----------------+-------------+------+-----+----------+-------+
+| Name           | varchar(30) | YES  |     | NULL     |       |
+| set_id         | int         | NO   | PRI | NULL     |       |
+| branch         | varchar(50) | NO   |     | talegaon |       |
+| transaction_id | int         | NO   | MUL | NULL     |       |
+| customer_id    | int         | NO   | MUL | NULL     |       |
++----------------+-------------+------+-----+----------+-------+
+5 rows in set (0.02 sec)
+
+mysql> desc customer;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| customer_id | int         | NO   | PRI | NULL    |       |
+| name        | varchar(10) | NO   |     | NULL    |       |
+| address     | varchar(50) | NO   |     | NULL    |       |
+| contactno   | int         | NO   |     | NULL    |       |
+| email_id    | varchar(50) | NO   |     | NULL    |       |
+| salary      | int         | NO   |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> select * from customer;
++-------------+--------+-----------+-----------+--------------------+--------+
+| customer_id | name   | address   | contactno | email_id           | salary |
++-------------+--------+-----------+-----------+--------------------+--------+
+|         345 | anita  | pune      |  78946789 | anita23@gmail.com  | 500000 |
+|         355 | ajay   | mumbai    |   9876543 | ajay23@gmail.com   | 550000 |
+|         356 | aman   | bengaluru |   9876783 | aman90@gmail.com   |  60000 |
+|         358 | sunita | thane     |   7654893 | sunita23@gmail.com |  70000 |
++-------------+--------+-----------+-----------+--------------------+--------+
+4 rows in set (0.04 sec)
+
+mysql> select min(salary) from customer;
++-------------+
+| min(salary) |
++-------------+
+|       60000 |
++-------------+
+1 row in set (0.01 sec)
+
+mysql> select max(salary) from customer;
++-------------+
+| max(salary) |
++-------------+
+|      550000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select avg(salary) from customer;
++-------------+
+| avg(salary) |
++-------------+
+| 295000.0000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select count(salary) from customer;
++---------------+
+| count(salary) |
++---------------+
+|             4 |
++---------------+
+1 row in set (0.01 sec)
+
+mysql> select sum(salary) from customer;
++-------------+
+| sum(salary) |
++-------------+
+|     1180000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select length('Karan');
++-------------------+
+| length('Karan') |
++-------------------+
+|                 7 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select concat_ws('hello','NULL','World');
++-----------------------------------+
+| concat_ws('hello','NULL','World') |
++-----------------------------------+
+| NULLhelloWorld                    |
++-----------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select ELT(3,'abc','aa','axy');
++-------------------------+
+| ELT(3,'abc','aa','axy') |
++-------------------------+
+| axy                     |
++-------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FIND_IN_SET('c', 'a,b,c,d');
++-----------------------------+
+| FIND_IN_SET('c', 'a,b,c,d') |
++-----------------------------+
+|                           3 |
++-----------------------------+
+1 row in set (0.00 sec)
+
+mysql> select format(123.6789,3);
++--------------------+
+| format(123.6789,3) |
++--------------------+
+| 123.679            |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> select left('ant',7);
++---------------+
+| left('ant',7) |
++---------------+
+| ant           |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select right('DYP',990);
++------------------+
+| right('DYP',990) |
++------------------+
+| DYP              |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> select lower('DUBAI');
++----------------+
+| lower('DUBAI') |
++----------------+
+| dubai          |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select upper('dubai');
++----------------+
+| upper('dubai') |
++----------------+
+| DUBAI          |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select LTRIM('xyz');
++--------------+
+| LTRIM('xyz') |
++--------------+
+| xyz          |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select repeat('mysql',9);
++-----------------------------------------------+
+| repeat('mysql',9)                             |
++-----------------------------------------------+
+| mysqlmysqlmysqlmysqlmysqlmysqlmysqlmysqlmysql |
++-----------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select replace('Mysql','M','PPP');
++----------------------------+
+| replace('Mysql','M','PPP') |
++----------------------------+
+| PPPysql                    |
++----------------------------+
+1 row in set (0.00 sec)
+
+mysql> select CURRENT_DATE();
++----------------+
+| CURRENT_DATE() |
++----------------+
+| 2025-08-06     |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select now();
++---------------------+
+| now()               |
++---------------------+
+| 2025-08-06 00:40:57 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> select DATEDIFF('2025-10-30','2025-09-01');
++-------------------------------------+
+| DATEDIFF('2025-10-30','2025-09-01') |
++-------------------------------------+
+|                                  59 |
++-------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> ^C
+mysql> ;
+ERROR:
+No query specified
+
+mysql> select month('2025-07-30');
++---------------------+
+| month('2025-07-30') |
++---------------------+
+|                   7 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> select year('2025-07-23');
++--------------------+
+| year('2025-07-23') |
++--------------------+
+|               2025 |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> select day('2025-07-26');
++-------------------+
+| day('2025-07-26') |
++-------------------+
+|                26 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql>  select dayname('2025-07-26');
++-----------------------+
+| dayname('2025-07-26') |
++-----------------------+
+| Saturday              |
++-----------------------+
+1 row in set (0.00 sec)
+
+mysql> select localtime();
++---------------------+
+| localtime()         |
++---------------------+
+| 2025-08-06 00:42:37 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> select
+    -> extract(month from '2025-07-26') as month,
+    -> extract(day from'2025-08-25')as day,
+    -> extract(year from'2025-08-25')as year;
++-------+------+------+
+| month | day  | year |
++-------+------+------+
+|     7 |   25 | 2025 |
++-------+------+------+
+1 row in set (0.00 sec)
+
+mysql> select dayofweek('2025-07-26') AS day_of_Week;
++-------------+
+| day_of_Week |
++-------------+
+|           7 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select CURRENT_TIMESTAMP;
++---------------------+
+| CURRENT_TIMESTAMP   |
++---------------------+
+| 2025-08-06 00:48:02 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO customer(customer_id, Name, Address,email_id,contactno,salary)
+    -> values(234,'Karan','mumbai','Karan@gmail.com','56789654',600000);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> INSERT INTO customer(customer_id, Name, Address,email_id,contactno,salary)
+    -> values(244,'shubham','pune','shubhamda@gmail.com','1234678',800000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from customer;
++-------------+---------+-----------+-----------+---------------------+--------+
+| customer_id | name    | address   | contactno | email_id            | salary |
++-------------+---------+-----------+-----------+---------------------+--------+
+|         234 | Karan   | mumbai    |  56789654 | Karan@gmail.com | 600000 |
+|         244 | shubham | pune      |   1234678 | shubhamda@gmail.com | 800000 |
+|         345 | anita   | pune      |  78946789 | anita23@gmail.com   | 500000 |
+|         355 | ajay    | mumbai    |   9876543 | ajay23@gmail.com    | 550000 |
+|         356 | aman    | bengaluru |   9876783 | aman90@gmail.com    |  60000 |
+|         358 | sunita  | thane     |   7654893 | sunita23@gmail.com  |  70000 |
++-------------+---------+-----------+-----------+---------------------+--------+
+6 rows in set (0.00 sec)
+
+mysql> create table vip_customer (
+    -> customer_id int primary key,
+    -> name varchar(200),
+    -> address varchar(10),
+    -> contactno varchar(20),
+    -> salary int
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into vip_customer (customer_id,name,address,contactno,salary)
+    -> values
+    -> (234,'Karan','mumbai','56789654',600000),
+    -> (244,'shubham','pune','1234678',800000);
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from vip_customer;
++-------------+---------+---------+-----------+--------+
+| customer_id | name    | address | contactno | salary |
++-------------+---------+---------+-----------+--------+
+|         234 | Karan   | mumbai  | 56789654  | 600000 |
+|         244 | shubham | pune    | 1234678   | 800000 |
++-------------+---------+---------+-----------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select customer_id,name from customer
+    -> union
+    -> select customer_id,name from vip_customer;
++-------------+---------+
+| customer_id | name    |
++-------------+---------+
+|         234 | Karan   |
+|         244 | shubham |
+|         345 | anita   |
+|         355 | ajay    |
+|         356 | aman    |
+|         358 | sunita  |
++-------------+---------+
+6 rows in set (0.03 sec)
+
+mysql> select customer_id,name from customer
+    -> union all
+    -> select customer_id,name from vip_customer;
++-------------+---------+
+| customer_id | name    |
++-------------+---------+
+|         234 | Karan   |
+|         244 | shubham |
+|         345 | anita   |
+|         355 | ajay    |
+|         356 | aman    |
+|         358 | sunita  |
+|         234 | Karan   |
+|         244 | shubham |
++-------------+---------+
+8 rows in set (0.00 sec)
+
+mysql> select customer_id,name from customer
+    -> intersect
+    -> select customer_id,name from vip_customer;
++-------------+---------+
+| customer_id | name    |
++-------------+---------+
+|         234 | Karan   |
+|         244 | shubham |
++-------------+---------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT c.Name, c.salary FROM customer c INNER JOIN vip_customer v ON c.customer_id = v.customer_id;
++---------+--------+
+| Name    | salary |
++---------+--------+
+| Karan   | 600000 |
+| shubham | 800000 |
++---------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select name,salary
+    -> from customer c
+    -> where not exists(
+    -> select 1 from vip_customer v where v.customer_id=c.customer_id
+    -> );
++--------+--------+
+| name   | salary |
++--------+--------+
+| anita  | 500000 |
+| ajay   | 550000 |
+| aman   |  60000 |
+| sunita |  70000 |
++--------+--------+
+4 rows in set (0.00 sec)
+
+mysql>
