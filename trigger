@@ -184,3 +184,32 @@ Help: https://docs.oracle.com/error-help/db/ora-04098/
 
 
 SQL>
+
+
+
+
+
+trigger program for backup:
+
+CREATE OR REPLACE TRIGGER masterTrigger
+BEFORE UPDATE OR DELETE
+ON clientMaster
+FOR EACH ROW
+BEGIN
+INSERT INTO audits(SrNo,name)
+values(:old.SrNo,:old.name);
+end;
+/
+
+
+trigger program for update and delete : 
+
+create or replace trigger xyz
+before delete or update on audits
+begin
+if rtrim(upper(To_char(sysdate,'day'))) = 'WEDNESDAY' then 
+RAISE_APPLICATION_ERROR(-20011,'can not perform delete or update
+ operation');
+end if;
+end;
+/
